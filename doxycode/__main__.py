@@ -3,6 +3,8 @@
 import os
 import sys
 
+from .parse import parse_comments
+
 if len(sys.argv) < 2:
   executable = 'doxycode.py'
   if len(sys.argv) > 0:
@@ -11,5 +13,4 @@ if len(sys.argv) < 2:
   exit(1)
 
 file = open(sys.argv[1], 'r')
-for line in file.readlines():
-  print(line, end='')
+parse_comments(file)

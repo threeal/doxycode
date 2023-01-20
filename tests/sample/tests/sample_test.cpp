@@ -1,8 +1,4 @@
-namespace sample {
-
-bool is_odd(int val) { return val % 2 == 1; }
-
-}  // namespace sample
+#include <sample/sample.hpp>
 
 int main() {
   if (sample::is_odd(5) != true) return 1;

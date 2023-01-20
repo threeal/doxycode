@@ -12,7 +12,7 @@ class TestParse(unittest.TestCase):
 
     def test_parse_comments(self):
         '''Test a function for parsing comments from a file.'''
-        with open(self.root / "sample/include/sample/sample.hpp", 'r') as file:
+        with open(self.root / "sample/include/sample/sample.hpp", 'r', encoding="utf-8") as file:
             comments = parse_comments(file)
             expected = ' namespace sample\n'
             self.assertEqual(comments, expected)

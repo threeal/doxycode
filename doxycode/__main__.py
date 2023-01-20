@@ -8,12 +8,12 @@ import sys
 from .parse import parse_comments
 
 if len(sys.argv) < 2:
-    executable = 'doxycode.py'
+    EXE = 'doxycode.py'
     if len(sys.argv) > 0:
-        executable = os.path.basename(sys.argv[0])
-    print('Usage: %s <filename>' % executable)
-    exit(1)
+        EXE = os.path.basename(sys.argv[0])
+    print(f'Usage: {EXE} <filename>')
+    sys.exit(1)
 
-file = open(sys.argv[1], 'r')
-comments = parse_comments(file)
-print(comments, end='')
+with open(sys.argv[1], 'r', encoding="utf-8") as file:
+    comments = parse_comments(file)
+    print(comments, end='')

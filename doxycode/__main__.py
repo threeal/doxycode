@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+'''Parse comments from a source code.'''
+
 import os
 import sys
 

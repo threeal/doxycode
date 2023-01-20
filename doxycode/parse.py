@@ -1,8 +1,12 @@
+'''Provide functions for parsing comments from a source code.'''
+
 def get_next(line: str, index: int) -> str:
+    '''Get the next character of an index from a string.'''
     return line[index + 1] if index + 1 < len(line) else ''
 
 
 def parse_comments(file) -> str:
+    '''Parse comments from a file.'''
     out = ''
     for line in file.readlines():
         # find the first occurrence of a forward slash

@@ -11,18 +11,20 @@ class TestParse(unittest.TestCase):
     def setUp(self):
         self.root = pathlib.Path(__file__).parent.resolve()
         self.source_dir = self.root / 'sample/include'
-        self.expected_dir = self.root / 'sample/expected'
+        self.expectation_dir = self.root / 'sample/expectation'
 
     def test_parse_doxygen_comments(self):
         '''Test a function for parsing Doxygen comments from a file.'''
-        with open(self.source_dir / 'sample/sample.hpp', 'r', encoding='utf-8') as file:
-            comments = parse_doxygen_comments(file)
-            expected_file = self.expected_dir / 'sample/sample_comments.json'
-            with open(expected_file, 'r', encoding='utf-8') as file:
-                file_txt = file.read()
-                expectations = json.loads(file_txt)
-                for comment, expectation in zip(comments, expectations):
-                    self.assertListEqual(comment, expectation)
+        test_cases = ['sample/sample.hpp']
+        for test_case in test_cases:
+            with open(self.source_dir / test_case, 'r', encoding='utf-8') as file:
+                comments = parse_doxygen_comments(file)
+                expectation_path = self.expectation_dir / (test_case + '.json')
+                with open(expectation_path, 'r', encoding='utf-8') as file:
+                    file_txt = file.read()
+                    expectations = json.loads(file_txt)
+                    for comment, expectation in zip(comments, expectations):
+                        self.assertListEqual(comment, expectation)
 
 if __name__ == '__main__':
     unittest.main()

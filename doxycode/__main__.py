@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-'''Parse Doxygen comments from a file.'''
+'''Parse multi line comments from a file.'''
 
 import os
 import sys
 
-from .parse import parse_doxygen_comments
+from .parse import parse_multiline_comments
 
 if len(sys.argv) < 2:
     EXE = 'doxycode.py'
@@ -15,7 +15,7 @@ if len(sys.argv) < 2:
     sys.exit(1)
 
 with open(sys.argv[1], 'r', encoding="utf-8") as file:
-    comments = parse_doxygen_comments(file)
+    comments = parse_multiline_comments(file)
     for comment in comments:
         for line in comment:
             print(line)

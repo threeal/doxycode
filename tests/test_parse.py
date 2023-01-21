@@ -3,7 +3,7 @@
 import json
 import pathlib
 import unittest
-from doxycode import parse_doxygen_comments
+from doxycode import parse_multiline_comments
 
 class TestParse(unittest.TestCase):
     '''The unit testing class.'''
@@ -13,12 +13,12 @@ class TestParse(unittest.TestCase):
         self.source_dir = self.root / 'sample/include'
         self.expectation_dir = self.root / 'sample/expectation'
 
-    def test_parse_doxygen_comments(self):
-        '''Test a function for parsing Doxygen comments from a file.'''
+    def test_parse_multiline_comments(self):
+        '''Test a function for parsing multi line comments from a file.'''
         test_cases = ['sample/sample.hpp']
         for test_case in test_cases:
             with open(self.source_dir / test_case, 'r', encoding='utf-8') as file:
-                comments = parse_doxygen_comments(file)
+                comments = parse_multiline_comments(file)
                 expectation_path = self.expectation_dir / (test_case + '.json')
                 with open(expectation_path, 'r', encoding='utf-8') as file:
                     file_txt = file.read()

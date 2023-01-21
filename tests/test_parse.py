@@ -11,15 +11,17 @@ class TestParse(unittest.TestCase):
 
 
     def setUp(self):
-        self.root = pathlib.Path(__file__).parent.resolve()
-        self.source_dir = self.root / 'sample/include'
+        root = pathlib.Path(__file__).parent.resolve()
+        raw_test_cases = ['sample/sample.hpp']
 
-        self.test_cases = ['sample/sample.hpp']
+        self.test_cases = []
+        for test_case in raw_test_cases:
+            self.test_cases.append(root / 'sample/include' / test_case)
 
         # Load expectations data from JSON files
         self.expectations_map = {}
-        for test_case in self.test_cases:
-            path = self.root / 'sample/expectation' / (test_case + '.json')
+        for raw_test_case, test_case in zip(raw_test_cases, self.test_cases):
+            path = root / 'sample/expectation' / (raw_test_case + '.json')
             with open(path, 'r', encoding='utf-8') as file:
                 txt = file.read()
                 self.expectations_map[test_case] = json.loads(txt)
@@ -30,7 +32,7 @@ class TestParse(unittest.TestCase):
 
         for test_case in self.test_cases:
             expectations = self.expectations_map[test_case]
-            with open(self.source_dir / test_case, 'r', encoding='utf-8') as file:
+            with open(test_case, 'r', encoding='utf-8') as file:
                 comments = parse_multiline_comments(file)
                 for comment, expectation in zip(comments, expectations):
                     self.assertListEqual(comment, expectation)

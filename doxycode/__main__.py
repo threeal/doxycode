@@ -18,4 +18,4 @@ with open(sys.argv[1], 'r', encoding="utf-8") as file:
     comments = parse_doxygen_comments(file)
     for comment in comments:
         for line in comment:
-            print(line, end='')
+            print(line)

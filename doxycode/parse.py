@@ -15,6 +15,10 @@ def parse_doxygen_comments(file) -> list[list[str]]:
     comments = []
     is_multiline = False
     for line in file.readlines():
+        # Clear a new line from the line
+        if line[-1] == '\n':
+            line = line[:-1]
+
         # find the first occurrence of a forward slash
         index = line.find('/')
         if index < 0:

@@ -24,19 +24,16 @@ def parse_doxygen_comments(file) -> list[str]:
             continue
 
         if is_multiline:
+            comments[-1] += line
             # check if it's the end of the multiline comment
             if get_prev_char(line, index) == '*':
-                comments[-1] += line[:index-1]
                 is_multiline = False
-            else:
-                # append all line if it's not the end
-                comments[-1] += line
             continue
 
         # check if it's the start of the multiline comment
         if get_next_char(line, index) == '*':
             if get_next_char(line, index + 1) == '*':
                 is_multiline = True
-                comments.append(line[index+3:])
+                comments.append(line)
 
     return comments

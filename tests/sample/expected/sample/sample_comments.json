@@ -1,4 +1,3 @@
 [
-  "* Check if a number is odd\n * @param val the number\n * @return true if the number is odd\n ",
-  " namespace sample\n"
+  " Check if a number is odd\n * @param val the number\n * @return true if the number is odd\n "
 ]

@@ -1,9 +1,9 @@
-'''Test functions for parsing comments from a source code.'''
+'''Test functions for parsing contents of a source code.'''
 
 import json
 import pathlib
 import unittest
-from doxycode import parse_comments
+from doxycode import parse_doxygen_comments
 
 class TestParse(unittest.TestCase):
     '''The unit testing class.'''
@@ -13,10 +13,10 @@ class TestParse(unittest.TestCase):
         self.source_dir = self.root / 'sample/include'
         self.expected_dir = self.root / 'sample/expected'
 
-    def test_parse_comments(self):
-        '''Test a function for parsing comments from a file.'''
+    def test_parse_doxygen_comments(self):
+        '''Test a function for parsing Doxygen comments from a file.'''
         with open(self.source_dir / 'sample/sample.hpp', 'r', encoding='utf-8') as file:
-            comments = parse_comments(file)
+            comments = parse_doxygen_comments(file)
             expected_file = self.expected_dir / 'sample/sample_comments.json'
             with open(expected_file, 'r', encoding='utf-8') as file:
                 file_txt = file.read()

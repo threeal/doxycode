@@ -1,4 +1,4 @@
-'''Provide functions for parsing comments from a source code.'''
+'''Provide functions for parsing contents of a source code.'''
 
 def get_next_char(line: str, index: int) -> str:
     '''Get the next character of an index from a string.'''
@@ -10,38 +10,33 @@ def get_prev_char(line: str, index: int) -> str:
     return line[index - 1] if index > 0 else ''
 
 
-def parse_comments(file) -> list[str]:
-    '''Parse comments from a file.'''
+def parse_doxygen_comments(file) -> list[str]:
+    '''Parse Doxygen comments from a file.'''
     comments = []
     is_multiline = False
     for line in file.readlines():
         # find the first occurrence of a forward slash
-        first = line.find('/')
-        if first < 0:
+        index = line.find('/')
+        if index < 0:
+            # append all line if still in the multiline comment
             if is_multiline:
                 comments[-1] += line
             continue
 
         if is_multiline:
-            char = get_prev_char(line, first)
-            if char == '*':
-                comments[-1] += line[:first-1]
+            # check if it's the end of the multiline comment
+            if get_prev_char(line, index) == '*':
+                comments[-1] += line[:index-1]
                 is_multiline = False
             else:
+                # append all line if it's not the end
                 comments[-1] += line
             continue
 
-        # the forward slash is a part of a single-line comment
-        char = get_next_char(line, first)
-        if char == '/':
-            comments.append(line[first+2:])
-        elif char == '*':
-            line = line[first+2:]
-            second = line.find('/')
-            if second >= 0 and get_prev_char(line, second) == '*':
-                comments.append(line[:second-1])
-            else:
-                comments.append(line)
+        # check if it's the start of the multiline comment
+        if get_next_char(line, index) == '*':
+            if get_next_char(line, index + 1) == '*':
                 is_multiline = True
+                comments.append(line[index+3:])
 
     return comments

@@ -10,7 +10,7 @@ def get_prev_char(line: str, index: int) -> str:
     return line[index - 1] if index > 0 else ''
 
 
-def parse_doxygen_comments(file) -> list[str]:
+def parse_doxygen_comments(file) -> list[list[str]]:
     '''Parse Doxygen comments from a file.'''
     comments = []
     is_multiline = False
@@ -20,11 +20,11 @@ def parse_doxygen_comments(file) -> list[str]:
         if index < 0:
             # append all line if still in the multiline comment
             if is_multiline:
-                comments[-1] += line
+                comments[-1].append(line)
             continue
 
         if is_multiline:
-            comments[-1] += line
+            comments[-1].append(line)
             # check if it's the end of the multiline comment
             if get_prev_char(line, index) == '*':
                 is_multiline = False
@@ -34,6 +34,6 @@ def parse_doxygen_comments(file) -> list[str]:
         if get_next_char(line, index) == '*':
             if get_next_char(line, index + 1) == '*':
                 is_multiline = True
-                comments.append(line)
+                comments.append([line])
 
     return comments

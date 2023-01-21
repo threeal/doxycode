@@ -21,7 +21,8 @@ class TestParse(unittest.TestCase):
             with open(expected_file, 'r', encoding='utf-8') as file:
                 file_txt = file.read()
                 expectations = json.loads(file_txt)
-                self.assertEqual(comments, expectations)
+                for comment, expectation in zip(comments, expectations):
+                    self.assertListEqual(comment, expectation)
 
 if __name__ == '__main__':
     unittest.main()

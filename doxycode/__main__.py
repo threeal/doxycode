@@ -17,4 +17,5 @@ if len(sys.argv) < 2:
 with open(sys.argv[1], 'r', encoding="utf-8") as file:
     comments = parse_doxygen_comments(file)
     for comment in comments:
-        print(comment, end='')
+        for line in comment:
+            print(line, end='')

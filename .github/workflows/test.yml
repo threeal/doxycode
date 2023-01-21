@@ -3,6 +3,15 @@ on:
   workflow_dispatch:
   push:
 jobs:
+  module-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v3.3.0
+
+      - name: Run Doxycode module
+        run: python3 -m doxycode tests/sample/include/sample/sample.hpp
+
   unit-tests:
     runs-on: ubuntu-latest
     steps:

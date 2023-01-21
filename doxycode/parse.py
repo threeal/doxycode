@@ -36,8 +36,22 @@ def parse_doxygen_comments(file) -> list[list[str]]:
 
         # check if it's the start of the multiline comment
         if get_next_char(line, index) == '*':
-            if get_next_char(line, index + 1) == '*':
-                is_multiline = True
-                comments.append([line])
+            # skip if a single line comment
+            subline = line
+            subindex = index
+            while True:
+                subline = subline[subindex+1:]
+                subindex = subline.find('/')
+                if subindex < 0:
+                    is_multiline = True
+                    break
+                if get_prev_char(subline, subindex) == '*':
+                    break
+
+            if is_multiline:
+                is_multiline = False
+                if get_next_char(line, index + 1) == '*':
+                    is_multiline = True
+                    comments.append([line])
 
     return comments

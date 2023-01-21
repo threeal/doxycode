@@ -1,8 +1,29 @@
 [
   [
-    "/** Check if a number is odd",
-    " * @param val the number",
-    " * @return true if the number is odd",
+    "/** Check if a number is even",
+    " * @param val The number",
+    " * @return True if the number is even",
     " */"
+  ],
+  [
+    "/** Check if a number is odd",
+    " * @param val The number",
+    " * @return True if the number is odd",
+    " */"
+  ],
+  [
+    "  /** Construct a new number check object",
+    "   * @param val The number",
+    "   */"
+  ],
+  [
+    "  /** Check if the number is even",
+    "   * @return True if the number is even",
+    "   */"
+  ],
+  [
+    "  /** Check if the number is odd",
+    "   * @return True if the number is odd",
+    "   */"
   ]
 ]

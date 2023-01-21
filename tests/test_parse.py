@@ -25,6 +25,7 @@ class TestParse(unittest.TestCase):
                     expectations = json.loads(file_txt)
                     for comment, expectation in zip(comments, expectations):
                         self.assertListEqual(comment, expectation)
+                    self.assertEqual(len(comments), len(expectations))
 
 if __name__ == '__main__':
     unittest.main()

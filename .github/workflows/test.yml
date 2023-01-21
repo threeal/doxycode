@@ -18,5 +18,8 @@ jobs:
       - name: Checkout this repository
         uses: actions/checkout@v3.3.0
 
+      - name: Install Pylint
+        run: pip install pylint
+
       - name: Run static code analyser
         run: pylint doxycode tests

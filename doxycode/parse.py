@@ -10,9 +10,9 @@ def get_prev_char(line: str, index: int) -> str:
     return line[index - 1] if index > 0 else ''
 
 
-def parse_comments(file) -> str:
+def parse_comments(file) -> list[str]:
     '''Parse comments from a file.'''
-    out = ''
+    comments = []
     for line in file.readlines():
         # find the first occurrence of a forward slash
         first = line.find('/')
@@ -22,11 +22,11 @@ def parse_comments(file) -> str:
         # the forward slash is a part of a single-line comment
         char = get_next_char(line, first)
         if char == '/':
-            out += line[first+2:]
+            comments.append(line[first+2:])
         elif char == '*':
             line = line[first+2:]
             second = line.find('/')
             if second >= 0 and get_prev_char(line, second) == '*':
-                out += line[:second-1]
+                comments.append(line[:second-1])
 
-    return out
+    return comments

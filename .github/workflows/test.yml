@@ -1,0 +1,49 @@
+name: test
+on:
+  workflow_dispatch:
+  push:
+jobs:
+  module-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v3.3.0
+
+      - name: Run Doxycode module
+        run: python3 -m doxycode tests/sample/include/sample/sample.hpp
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v3.3.0
+
+      - name: Run unit tests
+        run: python3 -m unittest
+
+  lint-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v3.3.0
+
+      - name: Install Pylint
+        run: pip install pylint
+
+      - name: Run static code analyser
+        run: pylint doxycode tests
+
+  sample-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v3.3.0
+
+      - name: Configure and build the sample project
+        uses: threeal/cmake-action@v1.0.0
+        with:
+          source-dir: tests/sample
+          build-dir: tests/sample/build
+
+      - name: Run unit tests of the sample project
+        run: ctest --test-dir tests/sample/build --output-on-failure

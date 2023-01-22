@@ -1,5 +1,6 @@
 '''Provide functions for parsing contents of a source code.'''
 
+
 def get_next_char(line: str, index: int) -> str:
     '''Get the next character of an index from a string.'''
     return line[index + 1] if index + 1 < len(line) else ''
@@ -51,3 +52,8 @@ def parse_multiline_comments(file) -> list[list[str]]:
                     break
 
     return comments
+
+
+def parse_doxygen_codes(_: list[list[str]]) -> list[list[str]]:
+    '''Parse Doxygen codes from multi line comments.'''
+    return []

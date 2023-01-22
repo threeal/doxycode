@@ -3,7 +3,7 @@
 import json
 import pathlib
 import unittest
-from doxycode import parse_multiline_comments
+from doxycode import parse_multiline_comments, parse_doxygen_codes
 
 
 class TestParse(unittest.TestCase):
@@ -31,12 +31,25 @@ class TestParse(unittest.TestCase):
         '''Test a function for parsing multi line comments from a file.'''
 
         for test_case in self.test_cases:
-            expectations = self.expectations_map[test_case]
+            expectations = self.expectations_map[test_case]["comments"]
             with open(test_case, 'r', encoding='utf-8') as file:
                 comments = parse_multiline_comments(file)
                 for comment, expectation in zip(comments, expectations):
                     self.assertListEqual(comment, expectation)
                 self.assertEqual(len(comments), len(expectations))
+
+
+    def test_parse_doxygen_codes(self):
+        '''Test a function for parsing Doxygen codes from multi line comments.'''
+
+        for test_case in self.test_cases:
+            expectations = self.expectations_map[test_case]["codes"]
+            with open(test_case, 'r', encoding='utf-8') as file:
+                comments = parse_multiline_comments(file)
+                codes = parse_doxygen_codes(comments)
+                for code, expectation in zip(codes, expectations):
+                    self.assertListEqual(code, expectation)
+                self.assertEqual(len(codes), len(expectations))
 
 
 if __name__ == '__main__':

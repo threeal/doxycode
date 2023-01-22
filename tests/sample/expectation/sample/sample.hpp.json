@@ -43,15 +43,15 @@
     ]
   ],
   "codes": [
-    [" * assert(is_even(6));"],
-    [" * assert(is_odd(5));"],
+    [" assert(is_even(6));"],
+    [" assert(is_odd(5));"],
     [
-      "   * Check check(6);",
-      "   * assert(check.is_even());"
+      " Check check(6);",
+      " assert(check.is_even());"
     ],
     [
-      "   * Check check(5);",
-      "   * assert(check.is_odd());"
+      " Check check(5);",
+      " assert(check.is_odd());"
     ]
   ]
 }

@@ -56,19 +56,28 @@ def parse_multiline_comments(file) -> list[list[str]]:
 
 def parse_doxygen_codes(comments: list[list[str]]) -> list[list[str]]:
     '''Parse Doxygen codes from multi line comments.'''
-    codes = []
+    raw_codes = []
     for comment in comments:
         is_code = False
-        # parse code in each line
+        # parse raw code in each line
         for line in comment:
             if is_code:
                 if line.find('@endcode') >= 0:
                     is_code = False
-                codes[-1].append(line)
+                raw_codes[-1].append(line)
                 continue
 
             if line.find('@code') >= 0:
                 is_code = True
-                codes.append([line])
+                raw_codes.append([line])
+
+    # filter raw codes
+    codes = []
+    for raw_code in raw_codes:
+        # check if only contains begin and end line
+        if len(raw_code) <= 2:
+            continue
+
+        codes.append(raw_code[1:-1])
 
     return codes

@@ -43,27 +43,15 @@
     ]
   ],
   "codes": [
+    [" * assert(is_even(6));"],
+    [" * assert(is_odd(5));"],
     [
-      " * @code",
-      " * assert(is_even(6));",
-      " * @endcode"
-    ],
-    [
-      " * @code",
-      " * assert(is_odd(5));",
-      " * @endcode"
-    ],
-    [
-      "   * @code{.cpp}",
       "   * Check check(6);",
-      "   * assert(check.is_even());",
-      "   * @endcode"
+      "   * assert(check.is_even());"
     ],
     [
-      "   * @code{.cpp}",
       "   * Check check(5);",
-      "   * assert(check.is_odd());",
-      "   * @endcode"
+      "   * assert(check.is_odd());"
     ]
   ]
 }

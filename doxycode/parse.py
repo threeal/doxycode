@@ -83,15 +83,13 @@ def parse_doxygen_codes(comments: list[list[str]]) -> list[list[str]]:
 
         # check if all lines have a symbol prefix
         symbol = stripped_code[0][0]
-        for idx, line in enumerate(stripped_code):
+        for line in stripped_code:
             # some has no symbol prefix, append raw instead
             if line[0] != symbol:
                 break
-
-            # all have a symbol prefix
-            if idx == len(stripped_code) - 1:
-                # replace all symbol prefix with a space
-                raw_code = [ line.replace(symbol, ' ', 1) for line in raw_code ]
+        else:
+            # all have a symbol prefix, replace with a space
+            raw_code = [ line.replace(symbol, ' ', 1) for line in raw_code ]
 
         # check if all have the same whitespace prefix
         whitespace = raw_code[0][0]
@@ -102,11 +100,9 @@ def parse_doxygen_codes(comments: list[list[str]]) -> list[list[str]]:
                 if char != whitespace:
                     break
                 count += 1
-
             if count == 0:
                 break
-            if whitespace_count > count:
-                whitespace_count = count
+            whitespace_count = min(whitespace_count, count)
 
         # trim whitespace prefix
         if whitespace_count > 0:

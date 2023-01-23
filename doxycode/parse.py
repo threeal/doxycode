@@ -71,6 +71,11 @@ def parse_doxygen_codes(comments: list[list[str]]) -> list[list[str]]:
                 is_code = True
                 raw_codes.append([line])
 
+    return clean_doxygen_codes(raw_codes)
+
+
+def clean_doxygen_codes(raw_codes: list[list[str]]) -> list[list[str]]:
+    '''Clean Doxygen codes by removing symbol and whitespaces prefixes'''
     # filter raw codes
     codes = []
     for raw_code in raw_codes:
@@ -83,15 +88,32 @@ def parse_doxygen_codes(comments: list[list[str]]) -> list[list[str]]:
 
         # check if all lines have a symbol prefix
         symbol = stripped_code[0][0]
-        for idx, line in enumerate(stripped_code):
+        for line in stripped_code:
             # some has no symbol prefix, append raw instead
             if line[0] != symbol:
-                codes.append(raw_code)
                 break
+        else:
+            # all have a symbol prefix, replace with a space
+            raw_code = [ line.replace(symbol, ' ', 1) for line in raw_code ]
 
-            # all have a symbol prefix
-            if idx == len(stripped_code) - 1:
-                code = [ line[1:] for line in stripped_code ]
-                codes.append(code)
+        # check if all have the same whitespace prefix
+        whitespace = raw_code[0][0]
+        whitespace_count = len(raw_code[0])
+        for line in raw_code:
+            count = 0
+            for char in line:
+                if char != whitespace:
+                    break
+                count += 1
+            if count == 0:
+                break
+            whitespace_count = min(whitespace_count, count)
+
+        # trim whitespace prefix
+        if whitespace_count > 0:
+            for idx, line in enumerate(raw_code):
+                raw_code[idx] = line[whitespace_count:]
+
+        codes.append(raw_code)
 
     return codes

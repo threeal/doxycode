@@ -71,6 +71,11 @@ def parse_doxygen_codes(comments: list[list[str]]) -> list[list[str]]:
                 is_code = True
                 raw_codes.append([line])
 
+    return clean_doxygen_codes(raw_codes)
+
+
+def clean_doxygen_codes(raw_codes: list[list[str]]) -> list[list[str]]:
+    '''Clean Doxygen codes by removing symbol and whitespaces prefixes'''
     # filter raw codes
     codes = []
     for raw_code in raw_codes:

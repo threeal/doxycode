@@ -18,7 +18,16 @@ bool is_even(int val) { return val % 2 == 0; }
  */
 bool is_odd(int val) { return val % 2 == 1; }
 
-/** Perform check on a number */
+/** Perform check on a number
+ * @code
+ * Check check(7);
+ * if (check.is_event()) {
+ *   std::cout << "is even" << std::endl;
+ * } else if (check.is_odd()){
+ *   std::cout << "is odd" << std::endl;
+ * }
+ * @endcode
+ */
 class Check {
  private:
   int val;  /**< The number */

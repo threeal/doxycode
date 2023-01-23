@@ -86,12 +86,13 @@ def parse_doxygen_codes(comments: list[list[str]]) -> list[list[str]]:
         for idx, line in enumerate(stripped_code):
             # some has no symbol prefix, append raw instead
             if line[0] != symbol:
-                codes.append(raw_code)
                 break
 
             # all have a symbol prefix
             if idx == len(stripped_code) - 1:
-                code = [ line[1:] for line in stripped_code ]
-                codes.append(code)
+                # replace all symbol prefix with a space
+                raw_code = [ line.replace(symbol, ' ', 1) for line in raw_code ]
+
+        codes.append(raw_code)
 
     return codes

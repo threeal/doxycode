@@ -93,6 +93,26 @@ def parse_doxygen_codes(comments: list[list[str]]) -> list[list[str]]:
                 # replace all symbol prefix with a space
                 raw_code = [ line.replace(symbol, ' ', 1) for line in raw_code ]
 
+        # check if all have the same whitespace prefix
+        whitespace = raw_code[0][0]
+        whitespace_count = len(raw_code[0])
+        for line in raw_code:
+            count = 0
+            for char in line:
+                if char != whitespace:
+                    break
+                count += 1
+
+            if count == 0:
+                break
+            if whitespace_count > count:
+                whitespace_count = count
+
+        # trim whitespace prefix
+        if whitespace_count > 0:
+            for idx, line in enumerate(raw_code):
+                raw_code[idx] = line[whitespace_count:]
+
         codes.append(raw_code)
 
     return codes
